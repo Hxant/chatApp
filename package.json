@@ -1,0 +1,26 @@
+{
+  "name": "chatapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hxant/chatApp.git"
+  },
+  "author": "Isaac Janda",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Hxant/chatApp/issues"
+  },
+  "homepage": "https://github.com/Hxant/chatApp#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "socket.io": "^2.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
+  }
+}
