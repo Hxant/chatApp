@@ -1,0 +1,9 @@
+<h1>Find Friends</h1>
+{{#each users}}
+<div class="vacation">
+{{#if name}}
+<h3>{{name}} {{lname}}</h3>
+<a href="add/{{id}}"><button class="badge-pill badge-sucess">ADD FRIEND</button></a>
+{{/if}}
+</div>
+{{/each}}

@@ -1,0 +1,117 @@
+*{
+	list-style: none;
+	text-decoration: none;
+}
+body{
+	background-color: #f3f3f3;
+	margin: 0px;
+}
+
+header{
+	width: 100%;
+	background-color: #fff;
+	height: 100px;
+}
+
+header .header-brand{
+	text-transform: uppercase;
+	line-height: 20px;
+	margin: 0 auto;
+	font-weight: 900;
+	text-align: center;
+	display: block;
+	color: #222;
+	padding: 20px 0;
+	font-size: 24px;
+}
+
+header nav ul{
+	width: fit-content;
+	display: block;
+	margin: 0 auto;
+	padding-left: 0px;
+}
+
+header nav ul li{
+	display: inline-block;
+	float: left;
+	padding-right: 10px;
+	
+}
+header nav ul li a{
+	font-family: arial;
+	font-size: 16px;
+	color: #222;
+	text-transform: uppercase;
+
+}
+
+header .header-about{
+	display: none;
+}
+
+.main-card{
+	width: calc(100%-40px);
+	margin: 0px 20px 0px 20px;
+	background-color: #f2f2f2;
+	padding: 40px 40px;
+	border: 3px solid #f2f2f2; 
+
+}
+
+ .login-form div{
+	margin: 0 auto;
+	line-height: 40px;
+	padding-bottom: 20px;
+	width: fit-content;
+}
+
+  .login-form div input{
+	margin: 0 auto;
+	line-height: 30px;
+	border: 2px solid #f2f2f2;
+	width: 200px;
+	border-radius: 5px 5px 5px 5px;
+
+}
+/*	.login-form div input : focus() {
+	border: 5px solid blue;
+
+/*}*/
+
+	.form-btn{
+		width: 130px !important;
+		color: blue;
+		background-color: #a0f464;
+		font-weight: 900;
+		line-height: 40px;
+		height: 50px;
+		font-size: 24px;
+		border-radius: 0px 40px 0px 40px !important;
+	}
+
+.index-banner{
+		width: 100%;
+		height: calc(100vh - 110px);
+		background-color: #2F4354;	
+		background-repeat: no-repeat;
+		background-size: cover;
+		background-position: center;
+		display: table;
+	}
+
+
+.vertical-center{
+	display: block;
+	vertical-align: middle;
+	/*line-height: calc(100vh-120px);*/
+	margin: 30% 10%;
+}
+
+footer{
+	width: calc(100% - 80px);
+	margin-top: 10px;
+	background-color: #111;
+	padding: 40px 40px;
+	overflow: hidden;
+}
