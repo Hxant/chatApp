@@ -11,10 +11,10 @@ var message = document.getElementById('message'),
 // Emit events
 button.addEventListener('click', function(){
     socket.emit(
-        'chat',
+        'chat_to_friend',
         {
             message: message.value,
-            username: username.value
+            username: username.value,
         }
     );
     message.value = "";
@@ -32,20 +32,4 @@ socket.on('typing',function(data){
 socket.on('output',function(data){
     feedback.innerHTML = '';
     output.innerHTML += '<p><strong>' + data.username + ':</strong> ' + data.message + '</p>';
-});
-
-var io = socket(server);
-
-// Connection event
-io.on('connection',function(socket){
-    console.log('socket connection made',socket.id);
-    // Handle chat event
-    socket.on('chat',function(data){
-        io.sockets.emit('output',data);
-    });
-    // Handle typing event
-    socket.on('typing',function(data){
-        socket.broadcast.emit('typing',data);
-    });
-
 });
