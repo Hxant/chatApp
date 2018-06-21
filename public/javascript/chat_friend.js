@@ -2,34 +2,34 @@
 var socket = io.connect('http://localhost:3000');
 
 // Query DOM
-var message = document.getElementById('message'),
-    handle = document.getElementById('username'),
-    button = document.getElementById('send'),
-    output = document.getElementById('output'),
-    feedback = document.getElementById('feedback');
+var message_frnd = document.getElementById('message-friend'),
+    handle_frnd = document.getElementById('username-friend'),
+    button_frnd = document.getElementById('send-friend'),
+    output_frnd = document.getElementById('output-friend'),
+    feedback_frnd = document.getElementById('feedback-friend');
 
 // Emit events
-button.addEventListener('click', function(){
+button_frnd.addEventListener('click', function(){
     socket.emit(
         'chat_to_friend',
         {
-            message: message.value,
-            username: username.value,
+            message: message_frnd.value,
+            username: handle_frnd.value,
         }
     );
-    message.value = "";
+    message_frnd.value = "";
 });
 
-message.addEventListener('keypress', function(){
-    socket.emit('typing',{username: username.value});
+message_frnd.addEventListener('keypress', function(){
+    socket.emit('typing_frnd_',{username: handle_frnd.value});
 });
 
 // Listen for events
-socket.on('typing',function(data){
-    feedback.innerHTML = '<p><em>' + data.username + ' is typing... </em></p>';
+socket.on('typing_frnd',function(data){
+    feedback_frnd.innerHTML = '<p><em>' + data.username + ' is typing... </em></p>';
 });
 
-socket.on('output',function(data){
-    feedback.innerHTML = '';
-    output.innerHTML += '<p><strong>' + data.username + ':</strong> ' + data.message + '</p>';
+socket.on('output_to_friend',function(data){
+    feedback_frnd.innerHTML = '';
+    output_frnd.innerHTML += '<p><strong>' + data.username + ':</strong> ' + data.message + '</p>';
 });

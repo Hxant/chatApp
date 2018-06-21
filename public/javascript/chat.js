@@ -31,21 +31,21 @@ socket.on('typing',function(data){
 
 socket.on('output',function(data){
     feedback.innerHTML = '';
-    output.innerHTML += '<p><strong>' + data.username + ':</strong> ' + data.message + '</p>';
+    output.innerHTML = data.grpmessage.join('') ;
 });
 
-var io = socket(server);
-
-// Connection event
-io.on('connection',function(socket){
-    console.log('socket connection made',socket.id);
-    // Handle chat event
-    socket.on('chat',function(data){
-        io.sockets.emit('output',data);
-    });
-    // Handle typing event
-    socket.on('typing',function(data){
-        socket.broadcast.emit('typing',data);
-    });
-
-});
+// var io = socket(server);
+//
+// // Connection event
+// io.on('connection',function(socket){
+//     console.log('socket connection made',socket.id);
+//     // Handle chat event
+//     socket.on('chat',function(data){
+//         io.sockets.emit('output',data);
+//     });
+//     // Handle typing event
+//     socket.on('typing',function(data){
+//         socket.broadcast.emit('typing',data);
+//     });
+//
+// });

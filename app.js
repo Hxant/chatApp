@@ -241,54 +241,54 @@ app.get('/about', function(req, res){
 
 var io = socket(server);
 
+  var users=[],grpmessages=[];
 
 // Connection event
 io.on('connection',function(socket){
-
+var userId;
     console.log('socket connection made',socket.id);
     // Handle chat event
 
     socket.on('chat',function(data){
-
-        io.sockets.emit('output',data);
-
+      grpmessages.push('<p><strong>' + data.username + ':</strong> ' + data.message + '</p>');
+        io.sockets.emit('output',{grpmessage : grpmessages});
+        console.log(grpmessages);
     });
     socket.on('chat_to_friend',function(data){
 
-      User.find({email:useremail},function(err, users) {
 
-          var user = {
-            friends:users[0].friends,
+
+      User.find({fname:data.username},function(err, result) {
+         userId = (result[0]._id).toString();
+
+           users[userId] = {
+            friends:result[0].friends,
               socket: socket,
               };
-
+              var user = users[userId];
           if(user && user.friends && user.friends.length > 0) {
 
-              user.socket.emit('output', data);
+              user.socket.emit('output_to_friend', data);
 
-              User.find({_id:{$in : user.friends}},function(err,friends) {
+                for(var i = 0; i < user.friends.length;i++){
 
-                for(var i=0; i<friends.length; i++) {
+                  var friendId = user.friends[i].toString();
 
-                        var friend = friends[i];
+                  var friend = users[friendId];
 
-                          if(friend && friend.socket) {
-                            console.log('alryt bro');
-                              friend.socket.emit('output', data);
+                  console.log(result[0].fname+' sent to ' + friend);
 
-                          }
-              }
+                  if(friend && friend.socket) {
 
-
-              });
-
-    }else {
+                        friend.socket.emit('output_to_friend', data);
+                      }
+                }
+    } else {
       console.log('cant send ' + data.message);
     }
       });
 
-
-}  );
+});
     // Handle typing event
 
     socket.on('typing',function(data){
@@ -296,6 +296,18 @@ io.on('connection',function(socket){
         socket.broadcast.emit('typing',data);
 
     });
+
+    socket.on('typing_frnd_',function(data){
+
+        socket.broadcast.emit('typing_frnd',data);
+
+    });
+
+    socket.on('disconnect',function(){
+      console.log('disconnected' + socket.id);
+      console.log(userId);
+      users[userId] = null;
+    })
 
 });
 
