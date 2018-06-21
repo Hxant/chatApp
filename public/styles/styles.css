@@ -21,7 +21,7 @@ h2{
     height: 400px;
     overflow: auto;
     background: #f9f9f9;
-    overflow: hidden;
+    overflow: auto;
 }
 
 #output p{

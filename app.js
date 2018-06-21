@@ -10,7 +10,9 @@ var credentials= require('./credentials');
 
 var socket = require('socket.io');
 
-var handlebars= require('express3-handlebars').create({defaultLayout: 'main'}); 
+var handlebars= require('express3-handlebars').create({defaultLayout: 'main'});
+
+var useremail='';
 
  app.engine('handlebars',handlebars.engine);
 
@@ -50,7 +52,7 @@ app.get('/createaccount',function(req, res){
 });
 
 var User = require('./models/usermodel.js');
- 
+
 app.post('/process-create', function(req,res){
 	var form2 = new formidable.IncomingForm();
 	form2.parse(req, function(err,fields,files){
@@ -59,7 +61,7 @@ app.post('/process-create', function(req,res){
 		if(err){
 			return res.redirect(303,'createaccount');
 		}
-			
+
 
 			new User({
 
@@ -68,16 +70,16 @@ app.post('/process-create', function(req,res){
 				email: fields.useremail,
 				password : fields.password,
 
-			}).save(); 
+			}).save();
 
 			 res.redirect(303,'/');
 
-			 User.find(function(err,users){
-			 	
-			 		console.log(users.length);
-			 		console.log(users);
-			 		
-			 });
+			 // User.find(function(err,users){
+       //
+			 // 		console.log(users.length);
+			 // 		console.log(users);
+       //
+			 // });
 
 
 	});
@@ -89,7 +91,7 @@ app.post('/process-create', function(req,res){
  	var form = new formidable.IncomingForm();
 
  	form.parse(req,function(err,fields,files){
- 		
+
  		if(err) return res.redirect(303,'/about');
 
 
@@ -110,38 +112,42 @@ app.post('/process-create', function(req,res){
 	 		// users.toArray(function(err,result){
 
 	 			if (users.length===0) {
-	 				req.session.flash = {message : 'Wrong email or password', intro : 'Authentication FAILED'};	
+	 				req.session.flash = {message : 'Wrong email or password', intro : 'Authentication FAILED'};
 	 				return res.redirect(303,'/');
 	 			}
 
 	 			var this_user = users[0];
 	 			delete this_user._id;
 	 			delete this_user.password;
-	 			
+
 	 			req.session.user = this_user.fname;
 	 			req.session.usermail= this_user.email;
+        useremail = req.session.usermail;
 	 				return res.redirect(303, 'chathome');
 
 	 		// });
 	 	});
-	 	
+
 	 });
- 	// console.log('form (from querystring): ' + req.query.form);	
+ 	// console.log('form (from querystring): ' + req.query.form);
  });
 
 app.get('/chathome', function(req,res){
 	res.render('chathome');
 });
 
+app.get('/chatfriends',function(req,res){
+  res.render('chatfriends');
+});
+
  app.get('/index', function(req,res){
- 		delete res.locals.flash;
  	if(res.locals.username && !(res.locals.username == " ")){
  	 res.render('index');
- 	 return;	
+ 	 return;
  	}
  	res.redirect(303,'/')
 
- 	
+
  });
 
  // app.get('/findfriends',function(req,res){
@@ -154,21 +160,21 @@ var Vacation = require('./connection.js');
 
  	var excludedEmails = [req.session.usermail," ","" ];
 
-	
-		User.find({email:req.session.usermail},function(err,users){
-			
-						var currentFriends = users[0].friends; 
+
+		 User.find({email:req.session.usermail},function(err,users){
+
+						var currentFriends = users[0].friends;
 
 			User.find({email:{$nin : excludedEmails}, _id:{$nin : currentFriends} },function(err, users){
 
 				//console.log(users);
-			
+
 				var context = {
-			
+
 					users: users.map(function(user){
-			
+
 						return {
-							// sku: vacation.sku,
+
 							name: user.fname,
 							lname: user.lname,
 							id : user._id,
@@ -235,18 +241,54 @@ app.get('/about', function(req, res){
 
 var io = socket(server);
 
+  var users=[],grpmessages=[];
 
 // Connection event
 io.on('connection',function(socket){
-
+var userId;
     console.log('socket connection made',socket.id);
     // Handle chat event
 
     socket.on('chat',function(data){
-
-        io.sockets.emit('output',data);
-
+      grpmessages.push('<p><strong>' + data.username + ':</strong> ' + data.message + '</p>');
+        io.sockets.emit('output',{grpmessage : grpmessages});
+        console.log(grpmessages);
     });
+    socket.on('chat_to_friend',function(data){
+
+
+
+      User.find({fname:data.username},function(err, result) {
+         userId = (result[0]._id).toString();
+
+           users[userId] = {
+            friends:result[0].friends,
+              socket: socket,
+              };
+              var user = users[userId];
+          if(user && user.friends && user.friends.length > 0) {
+
+              user.socket.emit('output_to_friend', data);
+
+                for(var i = 0; i < user.friends.length;i++){
+
+                  var friendId = user.friends[i].toString();
+
+                  var friend = users[friendId];
+
+                  console.log(result[0].fname+' sent to ' + friend);
+
+                  if(friend && friend.socket) {
+
+                        friend.socket.emit('output_to_friend', data);
+                      }
+                }
+    } else {
+      console.log('cant send ' + data.message);
+    }
+      });
+
+});
     // Handle typing event
 
     socket.on('typing',function(data){
@@ -255,9 +297,20 @@ io.on('connection',function(socket){
 
     });
 
+    socket.on('typing_frnd_',function(data){
+
+        socket.broadcast.emit('typing_frnd',data);
+
+    });
+
+    socket.on('disconnect',function(){
+      console.log('disconnected' + socket.id);
+      console.log(userId);
+      users[userId] = null;
+    })
+
 });
 
 
 
 //////////////////////////////
-
