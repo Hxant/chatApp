@@ -1,25 +1,118 @@
-<header>
-		<a href="homepage.html" class="header-brand">Studchat</a>
-		<nav class="home-header">
-			<ul>
-				<li class="chat-home"><a href="#">Home</a></li>
-				<li><a href="#">Profile</a></li>
-				<li style="hover ul{display: block;}"><a href="findfriends"> friends</a>
-					<ul style="display : none">
-						<li><a href="findfriends">find friends</a></li>
-						<li><a href="findfriends">suggested friends</a></li>
-					</ul>
-				</li>
-				<li><a href="chatfriends">Chats</a></li>
-				<li><a href="index">Chatroom</a></li>
-				<li><a href="#"><span class="badge-pill badge-danger" id="badge">50</span></a></li>
-				<li><a href="#">logout</a></li>
-			</ul>
-		</nav>
+<body>
+      <header class="header2">
+      	<ul>
+      		<img class="avator-icon" src="/img/IMG_3498.JPG">
+      		<li>status</li>
+      		<li>{{username}}</li>
+      		<li>location</li>
+      		<li>messages</li>
+      		<li onclick="show()">Global</li>
+      		<li>notification</li>
+      		<li>settings</li>
+      		<li>logout</li>
 
-	</header>
+      	</ul>
+      </header>
+      <main>
+      	<section class="row">
+      		    <section id="chat-app">
+      		
+            	<h2 class="app">globalchat</h2>
 
-	<main style="height: calc(100% - 110px);">
+                <div id="chat-window">
+                 <span id="feedback"></span>
+                    <div id="output">
+                        <!-- chat output window -->
+                    </div>
+                </div>
+            <input id="username" type="text" placeholder="Username" value={{username}} disabled>
+            <input id="message" type="text" placeholder="Message">
+            <button id="send">Send</button>
+        	<script src="/javascript/javascr.js"></script>
+            <script src="/javascript/chat.js"></script>
+      	</section>
+      		<div class="column left profile">
+      		<div class="profile_side">
+      			<div class="img">
+      				<img src="/img/IMG_3498.JPG">	
+      			</div>
+      			
+      			<div class="card">
+      				<p>{{username}} {{userlname}}</p>
+      				<h5>{{useremail}}</h5>
+      			</div>
+      		</div>
 
+      		<div class="simple_details">
+      			<h3>MEMBER SINCE</h3>
+      			<span>date you joined</span>
+      			<div>
+      				<a href="#">view profile</a>
+      			</div>
+      		</div>
+      	</div>
 
-	</main>
+      	<div class="column middle">
+      		<div class="card">
+      			<div class="card-item">
+      				<h4>post1<br></h4>
+      			<span>details</span>	
+      			</div>
+      			
+      		</div>
+					<div class="card">
+				      			<div class="card-item">
+				      				<h4>post1<br></h4>
+				      			<span>details</span>	
+				      			</div>
+				      			
+				      		</div>
+					<div class="card">
+				      			<div class="card-item">
+				      				<h4>post1<br></h4>
+				      			<span>details</span>	
+				      			</div>
+				      			
+				      		</div>
+					<div class="card">
+				      			<div class="card-item">
+				      				<h4>post1<br></h4>
+				      			<span>details</span>	
+				      			</div>
+				      			
+				      		</div>
+
+      		
+      	</div>
+
+      	<div class="column right">
+
+                  {{#each users}}
+                  {{#if name}}
+                        <div class="friends">
+                        <div class="friend">
+                              <img src="/img/IMG_3498.JPG">
+                              <span>{{name}} {{lname}}</span>
+                        </div>
+                        <div class="calls">
+                  
+                              <li>vc</li>
+                              <li>vidc</li>
+                              <li>mes</li>
+                              
+                        </div>
+                        
+                        <div class="status">
+                              <span>Status</span>     
+                        </div>
+                        
+                  </div>      
+                  {{/if}}
+                  {{/each}}
+
+      		
+      		
+      	</div>
+      	</section>
+
+      </main>

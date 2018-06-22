@@ -2,18 +2,18 @@
 	list-style: none;
 	text-decoration: none;
 }
-body{
+.body{
 	background-color: #f3f3f3;
 	margin: 0px;
 }
 
-header{
+.header-1{
 	width: 100%;
 	background-color: #fff;
 	height: 100px;
 }
 
-header .header-brand{
+.header-1 .header-brand{
 	text-transform: uppercase;
 	line-height: 20px;
 	margin: 0 auto;
@@ -25,20 +25,20 @@ header .header-brand{
 	font-size: 24px;
 }
 
-header nav ul{
+.header-1 nav ul{
 	width: fit-content;
 	display: block;
 	margin: 0 auto;
 	padding-left: 0px;
 }
 
-header nav ul li{
+.header-1 nav ul li{
 	display: inline-block;
 	float: left;
 	padding-right: 10px;
-	
+
 }
-header nav ul li a{
+.header-1 nav ul li a{
 	font-family: arial;
 	font-size: 16px;
 	color: #222;
@@ -46,7 +46,7 @@ header nav ul li a{
 
 }
 
-header .header-about{
+.header-1 .header-about{
 	display: none;
 }
 
@@ -55,7 +55,7 @@ header .header-about{
 	margin: 0px 20px 0px 20px;
 	background-color: #f2f2f2;
 	padding: 40px 40px;
-	border: 3px solid #f2f2f2; 
+	border: 3px solid #f2f2f2;
 
 }
 
@@ -93,7 +93,7 @@ header .header-about{
 .index-banner{
 		width: 100%;
 		height: calc(100vh - 110px);
-		background-color: #2F4354;	
+		background-color: #2F4354;
 		background-repeat: no-repeat;
 		background-size: cover;
 		background-position: center;
@@ -108,7 +108,7 @@ header .header-about{
 	margin: 30% 10%;
 }
 
-footer{
+footer {
 	width: calc(100% - 80px);
 	margin-top: 10px;
 	background-color: #111;
