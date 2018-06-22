@@ -31,8 +31,10 @@ var useremail='';
  app.use(function(req,res,next){
  	res.locals.flash = req.session.flash;
  	res.locals.username = req.session.user;
+  res.locals.userlname = req.session.userlname;
+  res.locals.useremail = req.session.usermail;
 
- 	delete req.session.flash, req.session.user;
+ 	delete req.session.flash, req.session.user, req.session.userlname;
 
  	next();
  });
@@ -119,10 +121,9 @@ app.post('/process-create', function(req,res){
 	 			var this_user = users[0];
 	 			delete this_user._id;
 	 			delete this_user.password;
-
+        req.session.userlname = this_user.lname;
 	 			req.session.user = this_user.fname;
 	 			req.session.usermail= this_user.email;
-        useremail = req.session.usermail;
 	 				return res.redirect(303, 'chathome');
 
 	 		// });
@@ -133,22 +134,47 @@ app.post('/process-create', function(req,res){
  });
 
 app.get('/chathome', function(req,res){
-	res.render('chathome');
+
+  if(res.locals.username && !(res.locals.username == " ")){
+
+
+    		 User.find({email:req.session.usermail},function(err,users){
+
+    						var currentFriends = users[0].friends;
+
+    			User.find({_id:{$in : currentFriends} },function(err, users){
+
+    				//console.log(users);
+
+    				var context_friends = {
+
+    					users: users.map(function(user){
+
+    						return {
+
+    							name: user.fname,
+    							lname: user.lname,
+    							id : user._id,
+
+    						}
+    					delete user.password;
+    					})
+    			};
+    				res.render('chathome', context_friends);
+    			});
+
+    			});
+
+   return;
+  }
+  res.redirect(303,'/')
+
 });
 
 app.get('/chatfriends',function(req,res){
   res.render('chatfriends');
 });
 
- app.get('/index', function(req,res){
- 	if(res.locals.username && !(res.locals.username == " ")){
- 	 res.render('index');
- 	 return;
- 	}
- 	res.redirect(303,'/')
-
-
- });
 
  // app.get('/findfriends',function(req,res){
  // 	res.render('findfriends');
