@@ -1,37 +1,42 @@
-<header>
-	<nav>
-		<a href="homepage.html" class="header-brand">Studchat</a>
-		<ul>
-			<li><a href="createaccount">Create Account</a></li>
-			<!-- <li><a href="#">login</a></li> -->
-			<li><a href="#" class="header-about">About Us</a></li>
-		</ul>
-	</nav>
-</header>
-<main>
-	<section class="index-banner">
-		<div class="vertical-center main-card">
-			<form action="/process-home"
-			enctype="multipart/form-data" method="POST" class="Needsvalidation login-form ">
+<section class="body">
 
-				<div>
-					<input type="hidden" name="_csrf" value="{{csrf}}">
-				</div>
-				<div>
-					<input type="text" name="email" placeholder="  Enter your User Email">
-				</div>
-				<div>
-					<input type="password" name="password" placeholder="  password">	
-				</div>
-				<div>
-			<input type="file" class="form-control" accept="image/*"
-			id="fieldPhoto" name="photo">
-				</div>
-				<div>
-					<input type="submit" class="form-btn" name="button" value="LOGIN">
-				</div>
-			</form> 
-		</div>
-	</section>
-	
-</main>
+	<header class="header-1">
+		<nav>
+			<a href="home" class="header-brand">Studchat</a>
+			<ul>
+				<li><a href="createaccount">Create Account</a></li>
+				<!-- <li><a href="#">login</a></li> -->
+				<li><a href="#" class="header-about">About Us</a></li>
+			</ul>
+		</nav>
+	</header>
+	<main>
+		<section class="index-banner">
+			<div class="vertical-center main-card">
+				<form action="/process-home"
+				enctype="multipart/form-data" method="POST" class="Needsvalidation login-form ">
+
+					<div>
+						<input type="hidden" name="_csrf" value="{{csrf}}">
+					</div>
+					<div>
+						<input type="text" name="email" placeholder="  Enter your User Email">
+					</div>
+					<div>
+						<input type="password" name="password" placeholder="  password">
+					</div>
+					<div>
+				<input type="file" class="form-control" accept="image/*"
+				id="fieldPhoto" name="photo">
+					</div>
+					<div>
+						<input type="submit" class="form-btn" name="button" value="LOGIN">
+					</div>
+				</form>
+			</div>
+		</section>
+
+	</main>
+
+
+</section
