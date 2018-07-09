@@ -1,0 +1,22 @@
+@import url('https://fonts.googleaplis.com/css?family=Poppins:400,500,700');
+
+
+html,body{
+  height:100%
+  width:
+  font-family: 'Poppins',sans-serif;
+  color:#222;
+}
+
+.nav-link{
+	font-size:1.1em !important;
+}
+
+.btn-primary{
+	background-color:#6648b1;
+	border;1px solid #6648b1;
+}
+.jumbotron{
+	padding:1rem;
+	border-radius:0;
+}

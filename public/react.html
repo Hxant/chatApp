@@ -1,0 +1,109 @@
+	<!doctype html>
+	<html>
+	<head>
+	<title>ChatRoom</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+	<style>
+	*{
+	margin:0;	padding:0;	box-sizing:border-box;	}
+	body{		font:13px Helvetica,Arial; background-color:#;	}
+	form{	background:#fff;		padding:20px;		position:fixed;	bottom:0;		width:60%;
+		align:center;		margin-right:50%;
+		margin-left:10%;	}
+	form input{		border:0;
+		padding:10px;		width:50%;
+		margin-right:.5%	}
+	form button{	width:100%;		background:rgb(130,224,255);
+		border:none;		padding:10px;	}
+	#messages{	list-style-type:none;	margin:0;padding:0;}
+	#messages li{padding:5px 10px;} #messages li:nth-child(odd){
+	background:#00BFFF;
+	}
+	
+	</style>
+	</head>
+
+		<body>
+		<!--<div class="container">
+					<div class="row">
+					  <div class="col-8">
+					    <div class="card">
+			              <div class="card-body text-center">
+					<ul id="messages"></ul>
+					      </div>
+					    </div>
+					  </div>
+					</div>
+				</div>-->
+		
+	<div class="container-fluid">
+		<div class="row">
+		 <div class="col-12">
+		  <div class="card">
+	       <div class="card-body text-center">
+		<ul id="messages"></ul>
+		   </div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+	
+		<div class="row">
+		<div class="col-md-6">
+		<form action="">
+			 <div class="input-group mb-3">
+					  <input id="m" autocomplete="off" type="text" class="form-control" placeholder="Message..." aria-label="Message..." aria-describedby="basic-addon2">
+					  <span class="input-group-btn">
+						<button class="btn btn-secondary" type="submit">Send</button>
+					  </span>
+					  </div>
+				</form>
+			  </div>         
+			</div>
+		</div>
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+		<script src="/socket.io/socket.io.js"></script>
+		<!--<script src="https://code.jquery.com/jquery-1.11.1.js"></script>-->
+		<script>
+		const room ='React';
+		
+		const socket=io('/tok');
+		$('form').submit(()=> {
+		let msg = $('#m').val();
+		socket.emit('message',{msg, room});
+		$('#m').val('');
+		return false;
+		});	
+		
+		socket.on('connect',() =>{
+		socket.emit('join',{room: room});
+		})
+
+	socket.on('message',(msg) =>{
+		$('#messages').append($('<li>').text(msg));
+		})
+		
+		//$(function(){	
+		//var socket = io.connect('http://localhost:8080');
+		//socket.on('message', function(data){
+		//console.log(data);
+		//socket.emit('another event', {Lia: 'wassap'});
+		//});
+
+		//$('form').submit( function() {
+		//socket.emit('message', $('#m').val());
+		//$('#m').val('')
+		//return false;
+		//})
+		//})
+	   //socket.on('message', function(msg) {
+		//$('#messages').append($('<li>').text(msg));
+		//})
+		</script>
+
+		</body>
+		</html>
